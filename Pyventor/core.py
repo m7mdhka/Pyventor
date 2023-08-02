@@ -46,11 +46,7 @@ class eventListener:
         self.listeners[event_name].append((callback, self._determine_priority(priority)))
         return True
 
-    def trigger_event(self, event_name:str, *args, **kwargs) -> None:
-        if event_name not in self.listeners:
-            print(f"Warning: No listeners registered for event '{event_name}'.")
-            return
-        
+    def trigger_event(self, event_name:str, *args, **kwargs) -> None:        
         sorted_listeners = sorted(self.listeners.get(event_name, []), key=lambda x: x[1], reverse=True)
         for callback, priority in sorted_listeners:
             params = inspect.signature(callback).parameters
